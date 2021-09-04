@@ -1,0 +1,57 @@
+image: docker:19
+
+services:
+  - docker:dind
+
+stages:
+  - build
+  - lint
+  - deploy
+
+build:
+  stage: build
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build --cache-from $CI_REGISTRY_IMAGE:lastest -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA .
+    - docker push $CI_REGISTRY_IMAGE
+
+lint:
+  stage: lint
+  image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+  script:
+    - composer global require friendsofphp/php-cs-fixer
+    - ~/.composer/vendor/bin/php-cs-fixer fix --dry-run --stop-on-violation --using-cache=no
+
+deploy_to_heroku:
+  stage: deploy
+  only:
+    - heroku
+  image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+  script:
+    - cp .env.example .env
+    - apt-get update -qq
+    - apt-get install -y -qq git
+    - apt-get install -y ruby
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_ID --api-key=$HEROKU_API_KEY
+
+deploy_to_vps:
+  stage: deploy
+  only:
+    - master
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | ssh-add -
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - >
+      ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_SERVER_IP
+      "docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
+      && cd /var/www/html/laranuxt
+      && git checkout master
+      && git pull origin master
+      && docker-compose down
+      && docker-compose up -d"

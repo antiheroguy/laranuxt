@@ -1,0 +1,45 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "nuxt",
+        "build": "nuxt build",
+        "start": "nuxt start",
+        "generate": "nuxt generate",
+        "lint": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
+        "lint:fix": "eslint --fix --ext \".js,.vue\" --ignore-path .gitignore .",
+        "postinstall": "[ -f .env ] || cp .env.example .env",
+        "prepare": "husky install"
+    },
+    "dependencies": {
+        "nuxt": "^2.15.7"
+    },
+    "devDependencies": {
+        "@fortawesome/free-solid-svg-icons": "^5.15.3",
+        "@nuxtjs/auth": "^4.9.1",
+        "@nuxtjs/axios": "^5.13.6",
+        "@nuxtjs/dotenv": "^1.4.1",
+        "@nuxtjs/eslint-config": "^6.0.1",
+        "@nuxtjs/eslint-module": "^3.0.2",
+        "@nuxtjs/fontawesome": "^1.1.2",
+        "@nuxtjs/i18n": "^7.0.1",
+        "@nuxtjs/moment": "^1.6.1",
+        "@nuxtjs/pwa": "^3.3.5",
+        "@nuxtjs/style-resources": "^1.1.0",
+        "ant-design-vue": "^1.7.5",
+        "babel-eslint": "^10.1.0",
+        "babel-plugin-import": "^1.13.3",
+        "cookie-universal-nuxt": "^2.1.5",
+        "core-js": "^3.9.1",
+        "eslint": "^7.28.0",
+        "eslint-plugin-nuxt": "^2.0.0",
+        "eslint-plugin-vue": "^7.7.0",
+        "fs-extra": "^10.0.0",
+        "husky": "^7.0.0",
+        "laravel-mix": "^6.0.6",
+        "less": "^4.1.1",
+        "less-loader": "6.2.0",
+        "lodash": "^4.17.19",
+        "node-sass": "4.14.1",
+        "sass-loader": "10.1.1"
+    }
+}

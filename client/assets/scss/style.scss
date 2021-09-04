@@ -1,0 +1,92 @@
+// If you want to override variables do it here
+@import "variables";
+
+// Mixins
+@import "mixins";
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+.width-1x {
+  width: 14px !important;
+}
+
+.min-w-100 {
+  min-width: 100px !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.ant-table {
+  table {
+    border-top: 1px solid #e8e8e8;
+  }
+}
+
+.ant-form-item-label {
+  white-space: normal;
+  line-height: 1.5;
+  padding-top: 9px;
+  padding-right: 5px;
+  @include mq(max_xs) {
+    padding: 0 0 3px 0;
+  }
+  > label {
+    &:after {
+      margin-right: 0;
+    }
+  }
+}
+
+.ant-select {
+  width: 100%;
+}
+
+.ant-modal-root:not(.ant-modal-confirm) {
+  .ant-modal {
+    @include mq(max_xl) {
+      max-width: 1170px;
+    }
+    @include mq(max_lg) {
+      max-width: 95%;
+    }
+
+    .ant-modal-body {
+      padding: 0;
+    }
+  }
+}
+
+/* -----------------------------------------------------------
+  Spacing
+----------------------------------------------------------- */
+@each $prop, $abbrev in (margin: m, padding: p) {
+  @each $size, $length in $spacers {
+    .#{$abbrev}-#{$size} { #{$prop}: $length !important; }
+    .#{$abbrev}t-#{$size},
+    .#{$abbrev}y-#{$size} {
+      #{$prop}-top: $length !important;
+    }
+    .#{$abbrev}r-#{$size},
+    .#{$abbrev}x-#{$size} {
+      #{$prop}-right: $length !important;
+    }
+    .#{$abbrev}b-#{$size},
+    .#{$abbrev}y-#{$size} {
+      #{$prop}-bottom: $length !important;
+    }
+    .#{$abbrev}l-#{$size},
+    .#{$abbrev}x-#{$size} {
+      #{$prop}-left: $length !important;
+    }
+  }
+}
