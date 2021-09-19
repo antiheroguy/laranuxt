@@ -42,6 +42,8 @@ export default ({ $axios, $cookies, app }, inject) => {
           if (app.$auth && app.$auth.loggedIn) {
             app.$auth.logout()
           }
+        } else {
+          throw error
         }
       })
     }
