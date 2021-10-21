@@ -222,17 +222,15 @@ export default {
           },
           {
             validator: (rule, value, callback) => {
-              if (!value || !this.model.password) {
+              if (!value || !this.model.password || value === this.model.password) {
                 return callback()
-              } else if (value !== this.model.password) {
-                return callback(
-                  new Error(
-                    this.$t('validation.not_match', { field1: this.$t('user.password'), field2: this.$t('user.password_confirm') })
-                  )
-                )
-              } else {
-                callback()
               }
+
+              return callback(
+                new Error(
+                  this.$t('validation.not_match', { field1: this.$t('user.password'), field2: this.$t('user.password_confirm') })
+                )
+              )
             },
             message: this.$t('validation.not_match', { field1: this.$t('user.password'), field2: this.$t('user.password_confirm') }),
             trigger: ['change', 'blur']

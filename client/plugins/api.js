@@ -19,11 +19,9 @@ export default ({ $axios, $cookies, app }, inject) => {
      */
     checkRefreshToken({ $axios, $cookies, app }) {
       $axios.onError(async error => {
-        const statusCode = error.response.status
-
-        // Refresh token if expired
-        const refreshToken = $cookies.get(REFRESH_TOKEN)
-        if (statusCode === 401) {
+        if (error.response && error.response.status === 401) {
+          // Refresh token if expired
+          const refreshToken = $cookies.get(REFRESH_TOKEN)
           if (refreshToken) {
             try {
               const { data } = await $axios.post('/refresh', { refresh_token: refreshToken })
@@ -39,12 +37,10 @@ export default ({ $axios, $cookies, app }, inject) => {
             }
           }
 
-          if (app.$auth && app.$auth.loggedIn) {
-            app.$auth.logout()
-          }
-        } else {
-          throw error
+          app.$auth.reset()
         }
+
+        return Promise.reject(error)
       })
     }
 
