@@ -25,7 +25,6 @@ Route::group(['middleware' => ['auth:api']], function () {
     // Authenticated
     Route::post('logout', [UserController::class, 'logout']);
     Route::get('me', [UserController::class, 'getProfile']);
-    Route::post('me', [UserController::class, 'postProfile']);
 
     // Others
     Route::post('menu/move', [MenuController::class, 'move']);

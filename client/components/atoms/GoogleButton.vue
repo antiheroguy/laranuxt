@@ -58,7 +58,7 @@ export default {
 
       try {
         const params = { provider: 'google' }
-        const { data: { url } } = await this.$api.getRedirectURI({ params })
+        const { data: { url } } = await this.$api.oauth.getRedirectURI({ params })
 
         const options = { url, title, width: 600, height: 720 }
         const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screen.left
@@ -94,7 +94,7 @@ export default {
       this.$store.dispatch('setLoading', true)
 
       try {
-        const { data } = await this.$api.handleCallback({ provider: 'google', ...e.data.callback })
+        const { data } = await this.$api.oauth.handleCallback({ provider: 'google', ...e.data.callback })
         await this.$auth.setUserToken(data.access_token)
         if (data.refresh_token) {
           this.$cookies.set(REFRESH_TOKEN, data.refresh_token, { maxAge: process.env.LONG_LIVED_TOKEN_LIFETIME, path: '/' })

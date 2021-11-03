@@ -88,7 +88,7 @@
               prop="roles"
             >
               <a-select
-                v-model="model.roleIds"
+                v-model="model.role_ids"
                 mode="multiple"
                 :placeholder="$t('menu.roles')"
               >
@@ -135,8 +135,9 @@ export default {
 
   async fetch() {
     this.$store.dispatch('setLoading', true)
+
     try {
-      const { data: { data } } = await this.$api.indexRole({ params: { all: true } })
+      const { data: { data } } = await this.$api.role.list({ params: { all: true } })
       this.roles = data
     } catch (_) {
       this.$notification.error({
@@ -163,6 +164,31 @@ export default {
           }
         ]
       }
+    }
+  },
+
+  methods: {
+    /**
+     * Get model
+     *
+     * @returns {Object}
+     */
+    getModel() {
+      const model = {
+        ...this.model,
+        roles: this.model.role_ids
+      }
+      return model
+    },
+
+    /**
+     * Set model
+     *
+     * @param {Object} data
+     */
+    setModel(data) {
+      data.role_ids = data.roles ? data.roles.map(item => item.id) : []
+      this.model = data
     }
   }
 }

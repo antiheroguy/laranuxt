@@ -36,6 +36,7 @@
   "user.password_confirm": "Password Confirm",
   "user.password": "Password",
   "user.roles": "Roles",
+  "validation.invalid_email": "Email is not a valid email",
   "validation.min": "{field} must be at least {min} characters",
   "validation.not_match": "{field1} and {field2} do not match",
   "validation.required": "{field} is required"

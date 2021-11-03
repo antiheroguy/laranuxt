@@ -15,8 +15,8 @@ import {
   Layout,
   Menu,
   Modal,
-  Row,
   Result,
+  Row,
   Select,
   Spin,
   Table,
@@ -38,8 +38,8 @@ Vue.use(Input)
 Vue.use(Layout)
 Vue.use(Menu)
 Vue.use(Modal)
-Vue.use(Row)
 Vue.use(Result)
+Vue.use(Row)
 Vue.use(Select)
 Vue.use(Spin)
 Vue.use(Table)

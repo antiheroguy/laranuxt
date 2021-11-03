@@ -62,15 +62,6 @@
             {{ $auth.user ? $auth.user.email : '' }}
           </a-menu-item>
           <a-menu-item key="1">
-            <nuxt-link to="/profile">
-              <font-awesome-icon
-                icon="user"
-                class="width-1x"
-              />&nbsp;
-              {{ $t('common.profile') }}
-            </nuxt-link>
-          </a-menu-item>
-          <a-menu-item key="2">
             <a
               href="javascript:void(0)"
               @click="logout()"

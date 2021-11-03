@@ -1,12 +1,18 @@
-import { camelCase } from 'lodash'
 import { mapState } from 'vuex'
 
 export default {
   async fetch() {
+    this.$store.dispatch('setLoading', true)
+
     try {
       const params = this.$route.query
-      this.$store.dispatch('setLoading', true)
-      const { data, meta } = await this.$store.dispatch(`${this.resource}/getList`, { params })
+      if (this.defaultParams && typeof this.defaultParams === 'object') {
+        Object.entries(this.defaultParams).forEach(([key, value]) => {
+          params[key] = value
+        })
+      }
+
+      const { data: { data, meta } } = await this.repository.list({ params })
       this.pagination = {
         ...this.pagination,
         total: meta ? meta.total : data.length,
@@ -49,6 +55,10 @@ export default {
         }
         return item
       })
+    },
+
+    repository() {
+      return this.$api[this.resource]
     }
   },
 
@@ -136,10 +146,10 @@ export default {
      * @param {Number} id
      */
     async deleteRecord(id) {
+      this.$store.dispatch('setLoading', true)
+
       try {
-        this.$store.dispatch('setLoading', true)
-        const action = camelCase(`destroy-${this.resource}`)
-        await this.$api[action]({ id })
+        await this.repository.delete(id)
 
         this.$notification.success({
           message: this.$t('text.successfully')

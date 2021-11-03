@@ -1,6 +1,6 @@
 import { join } from 'path'
 import { copySync, removeSync } from 'fs-extra'
-import icons from './client/configs/icons'
+import icons from './client/constants/icons'
 
 require('dotenv').config()
 
@@ -42,10 +42,9 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/antd-ui',
+    '~/plugins/antd',
     '~/plugins/api',
-    '~/plugins/directive',
-    '~/plugins/util'
+    '~/plugins/directive'
   ],
 
   // Router Configuration: https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-router
@@ -113,8 +112,7 @@ export default {
     redirect: {
       login: '/login',
       logout: '/login',
-      home: false,
-      user: '/profile'
+      home: false
     },
     strategies: {
       local: {

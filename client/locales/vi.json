@@ -36,6 +36,7 @@
   "user.password_confirm": "Xác nhận mật khẩu",
   "user.password": "Mật khẩu",
   "user.roles": "Vai trò",
+  "validation.invalid_email": "Email không phải là một email hợp lệ",
   "validation.min": "{field} phải có ít nhất {min} ký tự",
   "validation.not_match": "{field1} và {field2} không khớp",
   "validation.required": "{field} là bắt buộc"

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequest;
-use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\ProviderRequest;
 use App\Http\Requests\SearchRequest;
 use App\Http\Requests\UserRequest;
@@ -46,33 +45,6 @@ use Laravel\Socialite\Facades\Socialite;
  *          type="string",
  *          example="123456",
  *      ),
- *  )
- *
- *  @OA\Schema(
- *      schema="userWithPassword",
- *      allOf={
- *          @OA\Schema(
- *              @OA\Property(
- *                  property="name",
- *                  type="string",
- *                  example="admin",
- *              ),
- *          ),
- *          @OA\Schema(
- *              @OA\Property(
- *                  property="old_password",
- *                  type="string",
- *                  example="123456",
- *              ),
- *          ),
- *          @OA\Schema(
- *              @OA\Property(
- *                  property="new_password",
- *                  type="string",
- *                  example="123456",
- *              ),
- *          ),
- *      }
  *  )
  */
 class UserController extends Controller
@@ -407,54 +379,6 @@ class UserController extends Controller
     public function getProfile()
     {
         $user = auth()->guard('api')->user();
-
-        $user->menus = $this->userService->getMenus($user);
-
-        return new UserResource($user);
-    }
-
-    /**
-     * Update auth user info.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     *
-     *  @OA\Post(
-     *      path="/api/me",
-     *      tags={"User"},
-     *      operationId="postProfileUser",
-     *      summary="Update Auth User",
-     *      @OA\RequestBody(
-     *          required=true,
-     *          @OA\JsonContent(ref="#/components/schemas/userWithPassword"),
-     *      ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Updated",
-     *          @OA\JsonContent(
-     *              @OA\Property(
-     *                  property="data",
-     *                  ref="#/components/schemas/user",
-     *              ),
-     *          ),
-     *      ),
-     *  )
-     */
-    public function postProfile(ProfileRequest $request)
-    {
-        $user = auth()->user();
-
-        $data = $request->only('name');
-
-        if ($request->has('old_password') && $request->has('new_password')) {
-            if (!auth()->attempt(['email' => $user->email, 'password' => $request->old_password])) {
-                return response()->json(['message' => 'Old password doesn\'t match'], 403);
-            }
-            $data['password'] = bcrypt($request->new_password);
-        }
-
-        $user->update($data);
 
         $user->menus = $this->userService->getMenus($user);
 

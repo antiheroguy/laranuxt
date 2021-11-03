@@ -1,5 +1,4 @@
 import { mapState } from 'vuex'
-import { cloneDeep } from 'lodash'
 
 export default {
   props: {
@@ -10,12 +9,12 @@ export default {
   },
 
   mounted() {
-    this.getModel(this.id)
+    this.getDetail(this.id)
   },
 
   watch: {
     id(val) {
-      this.getModel(val)
+      this.getDetail(val)
     }
   },
 
@@ -28,23 +27,50 @@ export default {
   computed: {
     ...mapState({
       loading: 'loading'
-    })
+    }),
+
+    repository() {
+      return this.$api[this.resource]
+    }
   },
 
   methods: {
+    /**
+     * Get model
+     *
+     * @returns {Object}
+     */
+    getModel() {
+      return this.model
+    },
+
+    /**
+     * Set model
+     *
+     * @param {Object} data
+     */
+    setModel(data) {
+      this.model = data
+    },
+
     /**
      * Get item detail
      *
      * @param {Number} id
      */
-    async getModel(id) {
+    async getDetail(id) {
+      this.$store.dispatch('setLoading', true)
+
       try {
-        this.$store.dispatch('setLoading', true)
         if (this.$refs.form) {
           this.$refs.form.clearValidate()
         }
-        await this.$store.dispatch(`${this.resource}/getModel`, { id })
-        this.model = cloneDeep(this.$store.state[this.resource].model)
+        let model = {}
+        if (id) {
+          const { data: { data } } = await this.repository.show(id)
+          model = data
+        }
+        this.setModel(model)
       } catch (_) {
         this.$notification.error({
           message: this.$t('text.something_wrong')
@@ -60,9 +86,15 @@ export default {
     handleSubmit() {
       this.$refs.form.validate(async valid => {
         if (valid) {
+          this.$store.dispatch('setLoading', true)
+
           try {
-            this.$store.dispatch('setLoading', true)
-            await this.$store.dispatch(`${this.resource}/saveModel`, this.model)
+            const data = this.getModel()
+            if (this.model.id) {
+              await this.repository.update(this.model.id, data)
+            } else {
+              await this.repository.create(data)
+            }
 
             this.$notification.success({
               message: this.$t('text.successfully')

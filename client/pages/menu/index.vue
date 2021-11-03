@@ -104,10 +104,11 @@ export default {
 
   async fetch() {
     this.$store.dispatch('setLoading', true)
+
     try {
-      const { data } = await this.$api.indexMenu()
+      const { data: { data } } = await this.$api.menu.list({ params: { all: true } })
       const recursive = (parentId = 0) => {
-        const list = cloneDeep(data.data.filter(item => item.parent_id === parentId))
+        const list = cloneDeep(data.filter(item => item.parent_id === parentId))
         list.sort((a, b) => a.position - b.position)
         return list.map(item => {
           const children = recursive(item.id)
@@ -218,8 +219,9 @@ export default {
      */
     async batchUpdate(list) {
       this.$store.dispatch('setLoading', true)
+
       try {
-        await this.$api.moveMenu({ list })
+        await this.$api.menu.move({ list })
         this.$fetch()
       } catch (_) {
         this.$notification.error({
@@ -273,9 +275,10 @@ export default {
      * @param {Number} Item Id
      */
     async deleteRecord(id) {
+      this.$store.dispatch('setLoading', true)
+
       try {
-        this.$store.dispatch('setLoading', true)
-        await this.$api.destroyMenu({ id })
+        await this.$api.menu.delete(id)
 
         this.$notification.success({
           message: this.$t('text.successfully')

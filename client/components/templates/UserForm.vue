@@ -112,7 +112,7 @@
               prop="roles"
             >
               <a-select
-                v-model="model.roleIds"
+                v-model="model.role_ids"
                 mode="multiple"
                 :placeholder="$t('user.roles')"
               >
@@ -159,8 +159,9 @@ export default {
 
   async fetch() {
     this.$store.dispatch('setLoading', true)
+
     try {
-      const { data: { data } } = await this.$api.indexRole({ params: { all: true } })
+      const { data: { data } } = await this.$api.role.list({ params: { all: true } })
       this.roles = data
     } catch (_) {
       this.$notification.error({
@@ -194,6 +195,7 @@ export default {
           },
           {
             type: 'email',
+            message: this.$t('validation.invalid_email'),
             trigger: ['change', 'blur']
           }
         ],
@@ -237,6 +239,35 @@ export default {
           }
         ]
       }
+    }
+  },
+
+  methods: {
+    /**
+     * Get model
+     *
+     * @returns {Object}
+     */
+    getModel() {
+      const model = {
+        name: this.model.name,
+        email: this.model.email,
+        roles: this.model.role_ids
+      }
+      if (!this.model.id) {
+        model.password = this.model.password
+      }
+      return model
+    },
+
+    /**
+     * Set model
+     *
+     * @param {Object} data
+     */
+    setModel(data) {
+      data.role_ids = data.roles ? data.roles.map(item => item.id) : []
+      this.model = data
     }
   }
 }

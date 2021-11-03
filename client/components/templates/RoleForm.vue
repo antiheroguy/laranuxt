@@ -44,7 +44,7 @@
               prop="permissions"
             >
               <a-checkbox-group
-                v-model="model.permissionIds"
+                v-model="model.permission_ids"
                 name="permissions"
               >
                 <a-collapse
@@ -103,8 +103,9 @@ export default {
 
   async fetch() {
     this.$store.dispatch('setLoading', true)
+
     try {
-      const { data: { data } } = await this.$api.getPermission()
+      const { data: { data } } = await this.$api.role.getPermission()
       const parents = [...new Set(data.map(item => item.name.split('.')[0]))]
 
       this.permissions = parents.map(entry => {
@@ -138,6 +139,32 @@ export default {
           }
         ]
       }
+    }
+  },
+
+  methods: {
+    /**
+     * Get model
+     *
+     * @returns {Object}
+     */
+    getModel() {
+      const model = {
+        name: this.model.name,
+        permissions: this.model.permission_ids
+      }
+
+      return model
+    },
+
+    /**
+     * Set model
+     *
+     * @param {Object} data
+     */
+    setModel(data) {
+      data.permission_ids = data.permissions ? data.permissions.map(item => item.id) : []
+      this.model = data
     }
   }
 }

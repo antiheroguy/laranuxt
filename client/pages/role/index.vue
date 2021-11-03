@@ -205,6 +205,9 @@ export default {
       ],
       filters: {
         name: this.$route.query.name || ''
+      },
+      defaultParams: {
+        not_admin: 1
       }
     }
   },
