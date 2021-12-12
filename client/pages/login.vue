@@ -78,7 +78,7 @@ import { REFRESH_TOKEN } from '~/constants/cookies'
 import GoogleButton from '~/components/atoms/GoogleButton'
 
 export default {
-  layout: 'blank',
+  layout: 'guest',
 
   components: {
     GoogleButton

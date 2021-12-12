@@ -149,8 +149,8 @@ export default {
     vueI18n: {
       fallbackLocale: 'en',
       messages: {
-        en: require('./client/locales/en.json'),
-        vi: require('./client/locales/vi.json')
+        en: require('./client/assets/locales/en.json'),
+        vi: require('./client/assets/locales/vi.json')
       },
       silentTranslationWarn: true
     }

@@ -114,13 +114,12 @@ export default {
      * Logout user
      */
     async logout() {
+      this.$cookies.remove(REFRESH_TOKEN, { path: '/' })
       this.$store.dispatch('setLoading', true)
 
       try {
-        this.$cookies.remove(REFRESH_TOKEN, { path: '/' })
         await this.$auth.logout()
       } catch (_) {
-        this.$cookies.remove(REFRESH_TOKEN, { path: '/' })
         this.$notification.error({
           message: this.$t('text.something_wrong')
         })
