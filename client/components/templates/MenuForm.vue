@@ -28,7 +28,6 @@
                 <font-awesome-icon
                   slot="prefix"
                   icon="heading"
-                  class="width-1x"
                   style="color:rgba(0,0,0,.25)"
                 />
               </a-input>
@@ -50,7 +49,6 @@
                 <font-awesome-icon
                   slot="prefix"
                   icon="icons"
-                  class="width-1x"
                   style="color:rgba(0,0,0,.25)"
                 />
               </a-input>
@@ -72,7 +70,6 @@
                 <font-awesome-icon
                   slot="prefix"
                   icon="link"
-                  class="width-1x"
                   style="color:rgba(0,0,0,.25)"
                 />
               </a-input>

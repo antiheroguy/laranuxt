@@ -47,11 +47,6 @@ export default {
     '~/plugins/directive'
   ],
 
-  // Router Configuration: https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-router
-  router: {
-    linkActiveClass: 'active-link'
-  },
-
   // Define the custom directories: https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-dir
   dir: {
     static: '../public'

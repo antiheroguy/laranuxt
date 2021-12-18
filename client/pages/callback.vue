@@ -1,5 +1,5 @@
 <template>
-  <a-spin :spinning="loading" />
+  <a-spin :spinning="true" />
 </template>
 
 <script>
@@ -7,10 +7,6 @@ export default {
   layout: 'guest',
 
   middleware: 'guest',
-
-  data: () => ({
-    loading: true
-  }),
 
   mounted() {
     window.opener.postMessage({ callback: this.$route.query })

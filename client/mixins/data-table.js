@@ -32,7 +32,6 @@ export default {
   data() {
     return {
       data: [],
-      header: [],
       pagination: {
         showSizeChanger: true,
         showTotal: (total, range) => this.$t('pagination.total', { total }),
@@ -46,12 +45,15 @@ export default {
       loading: 'loading'
     }),
 
+    header() {
+      return []
+    },
+
     columns() {
       return this.header.map(item => {
+        item.sortOrder = null
         if (this.$route.query.order_by === item.dataIndex && this.$route.query.order_type) {
           item.sortOrder = +this.$route.query.order_type === 1 ? 'ascend' : 'descend'
-        } else {
-          item.sortOrder = null
         }
         return item
       })

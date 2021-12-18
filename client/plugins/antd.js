@@ -1,7 +1,6 @@
 import Vue from 'vue'
 
 import {
-  Breadcrumb,
   Button,
   Card,
   Checkbox,
@@ -24,7 +23,6 @@ import {
   notification
 } from 'ant-design-vue'
 
-Vue.use(Breadcrumb)
 Vue.use(Button)
 Vue.use(Card)
 Vue.use(Checkbox)

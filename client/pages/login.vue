@@ -27,7 +27,6 @@
               <font-awesome-icon
                 slot="prefix"
                 icon="envelope"
-                class="width-1x"
                 style="color:rgba(0,0,0,.25)"
               />
             </a-input>
@@ -42,7 +41,6 @@
               <font-awesome-icon
                 slot="prefix"
                 icon="lock"
-                class="width-1x"
                 style="color:rgba(0,0,0,.25)"
               />
             </a-input>

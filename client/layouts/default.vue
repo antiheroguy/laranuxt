@@ -11,9 +11,6 @@
         <a-layout-content class="pt-4">
           <transition name="fade">
             <div class="layout__content">
-              <Breadcrumb />
-              <!-- end breadcrumb -->
-
               <Nuxt />
               <!-- end main content -->
             </div>
@@ -32,14 +29,12 @@
 import Footer from '~/components/layouts/Footer'
 import Header from '~/components/layouts/Header'
 import Sidebar from '~/components/layouts/Sidebar'
-import Breadcrumb from '~/components/layouts/Breadcrumb'
 
 export default {
   components: {
     Footer,
     Header,
-    Sidebar,
-    Breadcrumb
+    Sidebar
   },
 
   middleware: ['auth'],

@@ -14,7 +14,7 @@
         >
           <font-awesome-icon
             icon="plus-circle"
-            class="width-1x mr-1"
+            class="mr-1"
           />
           {{ $t('common.new') }}
         </a-button>
@@ -48,7 +48,6 @@
                 <font-awesome-icon
                   slot="prefix"
                   icon="heading"
-                  class="width-1x"
                   style="color:rgba(0,0,0,.25)"
                 />
               </a-input>
@@ -71,7 +70,6 @@
                 <font-awesome-icon
                   slot="prefix"
                   icon="envelope"
-                  class="width-1x"
                   style="color:rgba(0,0,0,.25)"
                 />
               </a-input>
@@ -90,7 +88,7 @@
             >
               <font-awesome-icon
                 icon="search"
-                class="width-1x mr-1"
+                class="mr-1"
               />
               {{ $t('common.search') }}
             </a-button>
@@ -105,7 +103,7 @@
             >
               <font-awesome-icon
                 icon="eraser"
-                class="width-1x mr-1"
+                class="mr-1"
               />
               {{ $t('common.clear') }}
             </a-button>
@@ -141,10 +139,7 @@
             :disabled="loading"
             @click="gotoDetail(record.id)"
           >
-            <font-awesome-icon
-              icon="pencil-alt"
-              class="width-1x"
-            />
+            <font-awesome-icon icon="pencil-alt" />
           </a-button>
 
           <a-button
@@ -154,10 +149,7 @@
             :disabled="loading"
             @click="showDetail(record.id)"
           >
-            <font-awesome-icon
-              icon="eye"
-              class="width-1x"
-            />
+            <font-awesome-icon icon="eye" />
           </a-button>
 
           <a-button
@@ -167,10 +159,7 @@
             :disabled="loading"
             @click="confirmToDelete(record.id)"
           >
-            <font-awesome-icon
-              icon="trash-alt"
-              class="width-1x"
-            />
+            <font-awesome-icon icon="trash-alt" />
           </a-button>
         </template>
       </a-table>
@@ -218,7 +207,16 @@ export default {
       resource: 'user',
       visible: false,
       currentId: 0,
-      header: [
+      filters: {
+        name: this.$route.query.name || '',
+        email: this.$route.query.email || ''
+      }
+    }
+  },
+
+  computed: {
+    header() {
+      return [
         {
           title: 'ID',
           dataIndex: 'id',
@@ -246,11 +244,7 @@ export default {
           scopedSlots: { customRender: 'action' },
           width: 140
         }
-      ],
-      filters: {
-        name: this.$route.query.name || '',
-        email: this.$route.query.email || ''
-      }
+      ]
     }
   },
 

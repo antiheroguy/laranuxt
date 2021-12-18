@@ -28,7 +28,6 @@
                 <font-awesome-icon
                   slot="prefix"
                   icon="heading"
-                  class="width-1x"
                   style="color:rgba(0,0,0,.25)"
                 />
               </a-input>

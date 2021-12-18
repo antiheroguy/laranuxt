@@ -66,10 +66,7 @@
               href="javascript:void(0)"
               @click="logout()"
             >
-              <font-awesome-icon
-                icon="sign-out-alt"
-                class="width-1x"
-              />&nbsp;
+              <font-awesome-icon icon="sign-out-alt" />&nbsp;
               {{ $t('common.logout') }}
             </a>
           </a-menu-item>

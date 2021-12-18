@@ -14,7 +14,7 @@
         >
           <font-awesome-icon
             icon="plus-circle"
-            class="width-1x mr-1"
+            class="mr-1"
           />
           {{ $t('common.new') }}
         </a-button>
@@ -43,10 +43,7 @@
                   :disabled="loading"
                   @click="showDetail(key)"
                 >
-                  <font-awesome-icon
-                    icon="pencil-alt"
-                    class="width-1x"
-                  />
+                  <font-awesome-icon icon="pencil-alt" />
                 </a-button>
 
                 <a-button
@@ -57,10 +54,7 @@
                   :disabled="loading"
                   @click="confirmToDelete(key)"
                 >
-                  <font-awesome-icon
-                    icon="trash-alt"
-                    class="width-1x"
-                  />
+                  <font-awesome-icon icon="trash-alt" />
                 </a-button>
               </div>
             </template>
