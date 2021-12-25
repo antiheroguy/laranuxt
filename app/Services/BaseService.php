@@ -145,7 +145,7 @@ abstract class BaseService
         $keyName = $keyName ?: $this->model->getKeyName();
         $values = array_keys(array_values($data)[0]);
         $list = implode(', ', array_keys($data));
-        $current = now()->format('Y-m-d H:i:s');
+        $params = [];
 
         $statement = "UPDATE {$table} SET" . PHP_EOL;
         foreach ($values as $value) {
@@ -154,12 +154,14 @@ abstract class BaseService
                 if (!isset($item[$value])) {
                     throw new \Exception('Missing data');
                 }
-                $statement .= "    WHEN '{$key}' THEN '{$item[$value]}'" . PHP_EOL;
+                $statement .= "\tWHEN '{$key}' THEN ?" . PHP_EOL;
+                $params[] = $item[$value];
             }
             $statement .= 'END,' . PHP_EOL;
         }
-        $statement .= "updated_at = '{$current}' WHERE {$keyName} IN ({$list})";
+        $statement .= "updated_at = ? WHERE {$keyName} IN ({$list})";
+        $params[] = now()->format('Y-m-d H:i:s');
 
-        return DB::update($statement);
+        return DB::update($statement, $params);
     }
 }
