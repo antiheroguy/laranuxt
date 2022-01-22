@@ -295,7 +295,7 @@ class UserController extends Controller
 
         $client = $this->userService->getGrantClient();
 
-        $response = Request::create('oauth/token', 'post', [
+        $response = Request::create(route('passport.token'), 'post', [
             'grant_type' => 'password',
             'client_id' => $client->id,
             'client_secret' => $client->secret,
@@ -489,7 +489,7 @@ class UserController extends Controller
 
         $client = $this->userService->getGrantClient();
 
-        $response = Request::create('oauth/token', 'post', [
+        $response = Request::create(route('passport.token'), 'post', [
             'grant_type' => 'password',
             'client_id' => $client->id,
             'client_secret' => $client->secret,

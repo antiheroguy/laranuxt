@@ -158,7 +158,7 @@ export default {
     }
   },
 
-  // Style resources module configuration: https://github.com/nuxt-community/style-resources-module#readme
+  // Style resources module configuration: https://github.com/nuxt-community/style-resources-module
   styleResources: {
     scss: [
       '~/assets/scss/_variables.scss',

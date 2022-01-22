@@ -26,7 +26,7 @@ class RoleRequest extends FormRequest
         $required = !$this->role ? 'required|' : '';
 
         return [
-            'name' => $required . 'max:255',
+            'name' => $required . 'max:255|unique:roles,name,' . ($this->role->id ?? 0),
             'permissions.*' => 'integer|min:0',
         ];
     }

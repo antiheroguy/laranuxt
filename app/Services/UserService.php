@@ -37,13 +37,18 @@ class UserService extends BaseService
             return Menu::with('menus')->where('parent_id', 0)->orderBy('position', 'asc')->get();
         }
 
-        $roles = $user->roles->pluck('id')->toArray();
+        $roles = $user->roles->pluck('id');
 
         if (!count($roles)) {
             return [];
         }
 
-        $menuIds = DB::table('model_has_roles')->select('model_id')->whereIn('role_id', $roles)->where('model_type', Menu::class)->get()->pluck('model_id')->toArray();
+        $menuIds = DB::table(config('permission.table_names.model_has_roles'))
+            ->select(config('permission.column_names.model_morph_key'))
+            ->whereIn('role_id', $roles)
+            ->where('model_type', Menu::class)
+            ->get()
+            ->pluck(config('permission.column_names.model_morph_key'));
 
         if (!count($menuIds)) {
             return [];
@@ -64,17 +69,16 @@ class UserService extends BaseService
      */
     public function recursiveMenu($menus = [], $parentId = 0)
     {
-        return
-            collect($menus)
-                ->filter(function ($item) use ($parentId) {
+        return collect($menus)
+            ->filter(function ($item) use ($parentId) {
                     return $item->parent_id == $parentId;
                 })
-                ->map(function ($item) use ($menus) {
+            ->map(function ($item) use ($menus) {
                     $item->menus = $this->recursiveMenu($menus, $item->id);
 
                     return $item;
                 })
-                ->values();
+            ->values();
     }
 
     /**

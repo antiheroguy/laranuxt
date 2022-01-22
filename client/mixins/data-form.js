@@ -71,9 +71,9 @@ export default {
           model = data
         }
         this.setModel(model)
-      } catch (_) {
+      } catch (error) {
         this.$notification.error({
-          message: this.$t('text.something_wrong')
+          message: error?.response?.data?.message || this.$t('text.something_wrong')
         })
       } finally {
         this.$store.dispatch('setLoading', false)
@@ -101,9 +101,9 @@ export default {
             })
 
             this.$emit('save')
-          } catch (_) {
+          } catch (error) {
             this.$notification.error({
-              message: this.$t('text.something_wrong')
+              message: error?.response?.data?.message || this.$t('text.something_wrong')
             })
           } finally {
             this.$store.dispatch('setLoading', false)

@@ -20,9 +20,9 @@ export default {
         pageSize: params.limit ? +params.limit : 20
       }
       this.data = data
-    } catch (_) {
+    } catch (error) {
       this.$notification.error({
-        message: this.$t('text.something_wrong')
+        message: error?.response?.data?.message || this.$t('text.something_wrong')
       })
     } finally {
       this.$store.dispatch('setLoading', false)
@@ -157,9 +157,9 @@ export default {
           message: this.$t('text.successfully')
         })
         this.$fetch()
-      } catch (_) {
+      } catch (error) {
         this.$notification.error({
-          message: this.$t('text.something_wrong')
+          message: error?.response?.data?.message || this.$t('text.something_wrong')
         })
       } finally {
         this.$store.dispatch('setLoading', false)

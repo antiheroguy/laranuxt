@@ -119,9 +119,9 @@ export default {
       }
       this.data = recursive()
       this.$auth.fetchUser()
-    } catch (_) {
+    } catch (error) {
       this.$notification.error({
-        message: this.$t('text.something_wrong')
+        message: error?.response?.data?.message || this.$t('text.something_wrong')
       })
     } finally {
       this.$store.dispatch('setLoading', false)
@@ -217,9 +217,9 @@ export default {
       try {
         await this.$api.menu.move({ list })
         this.$fetch()
-      } catch (_) {
+      } catch (error) {
         this.$notification.error({
-          message: this.$t('text.something_wrong')
+          message: error?.response?.data?.message || this.$t('text.something_wrong')
         })
       } finally {
         this.$store.dispatch('setLoading', false)
@@ -278,9 +278,9 @@ export default {
           message: this.$t('text.successfully')
         })
         this.$fetch()
-      } catch (_) {
+      } catch (error) {
         this.$notification.error({
-          message: this.$t('text.something_wrong')
+          message: error?.response?.data?.message || this.$t('text.something_wrong')
         })
       } finally {
         this.$store.dispatch('setLoading', false)
